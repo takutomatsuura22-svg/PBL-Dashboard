@@ -43,12 +43,28 @@ git push -u origin main
 Vercelが自動的にNext.jsプロジェクトを検出します。`vercel.json`ファイルがプロジェクトルートに配置されているため、以下の設定が自動的に適用されます：
 
 - **Framework Preset**: Next.js（自動検出）
-- **Root Directory**: `frontend`（`vercel.json`で設定）
-- **Build Command**: `npm install && npm run build`（`vercel.json`で設定）
+- **Root Directory**: `frontend`（**手動で設定が必要** - 下記参照）
+- **Build Command**: `cd frontend && npm install && npm run build`（`vercel.json`で設定）
 - **Output Directory**: `.next`（Next.jsのデフォルト）
 - **Install Command**: `npm install`（`vercel.json`で設定）
 
-**注意**: プロジェクトはworkspace構成のため、`rootDirectory`が`frontend`に設定されています。Vercelは`frontend`ディレクトリをルートとして扱います。
+**重要**: プロジェクトはworkspace構成のため、**Root Directoryを`frontend`に手動で設定する必要があります**。
+
+#### Root Directoryの設定方法
+
+**方法1: インポート時に設定（推奨）**
+1. リポジトリをインポートする際の「Configure Project」画面で
+2. 「Root Directory」を`frontend`に設定
+3. 「Deploy」をクリック
+
+**方法2: プロジェクト設定で後から設定**
+1. プロジェクト設定画面で「Settings」タブを開く
+2. 「General」セクションを開く
+3. 「Root Directory」の「Edit」をクリック
+4. `frontend`と入力して「Save」をクリック
+5. 新しいデプロイを実行（設定変更後は再デプロイが必要）
+
+**注意**: Root Directoryを`frontend`に設定した場合、`vercel.json`のビルドコマンドは自動的に`frontend`ディレクトリ内で実行されるため、`cd frontend`は不要になります。ただし、現在の設定でも動作します。
 
 ### ステップ4: 環境変数の設定
 
