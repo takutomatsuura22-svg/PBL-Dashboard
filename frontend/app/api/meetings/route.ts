@@ -179,7 +179,7 @@ async function saveToAirtable(meeting: MeetingRecord) {
     ])
   } catch (error) {
     // テーブルが存在しない場合はスキップ
-    if (error.message && error.message.includes('NOT_FOUND')) {
+    if (error instanceof Error && error.message && error.message.includes('NOT_FOUND')) {
       console.warn(`Airtable table "${meetingsTable}" not found. Skipping.`)
       return
     }
