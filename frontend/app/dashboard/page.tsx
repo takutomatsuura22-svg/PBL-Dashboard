@@ -3,6 +3,13 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+
+// Recharts型定義の問題を回避
+const XAxisAny = XAxis as any
+const YAxisAny = YAxis as any
+const CartesianGridAny = CartesianGrid as any
+const TooltipAny = Tooltip as any
+const ScatterAny = Scatter as any
 import Card from '@/components/Card'
 
 interface Student {
@@ -127,8 +134,8 @@ export default function DashboardPage() {
                 <ScatterChart
                   margin={{ top: 20, right: 20, bottom: 60, left: 60 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e8e8ed" />
-                  <XAxis 
+                  <CartesianGridAny strokeDasharray="3 3" stroke="#e8e8ed" />
+                  <XAxisAny 
                     type="number" 
                     dataKey="x" 
                     name="モチベーション"
@@ -136,7 +143,7 @@ export default function DashboardPage() {
                     label={{ value: 'モチベーション', position: 'insideBottom', offset: -10, style: { textAnchor: 'middle' } }}
                     ticks={[1, 2, 3, 4, 5]}
                   />
-                  <YAxis 
+                  <YAxisAny 
                     type="number" 
                     dataKey="y" 
                     name="タスク量"
@@ -144,7 +151,7 @@ export default function DashboardPage() {
                     label={{ value: 'タスク量', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }}
                     ticks={[1, 2, 3, 4, 5]}
                   />
-                  <Tooltip 
+                  <TooltipAny 
                     cursor={{ strokeDasharray: '3 3' }}
                     content={({ active, payload }) => {
                       if (active && payload && payload[0]) {
@@ -163,11 +170,11 @@ export default function DashboardPage() {
                       return null
                     }}
                   />
-                  <Scatter name="学生" data={scatterData} fill="#007aff">
+                  <ScatterAny name="学生" data={scatterData} fill="#007aff">
                     {scatterData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={getColor(entry)} />
                     ))}
-                  </Scatter>
+                  </ScatterAny>
                 </ScatterChart>
               </ResponsiveContainer>
 
