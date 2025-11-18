@@ -37,25 +37,25 @@ export async function GET(request: Request): Promise<Response> {
       return NextResponse.json(
         { error: 'student_id is required' },
         { status: 400 }
-      )
+      ) as Response
     }
 
     const assessmentFile = join(assessmentsDir, `${studentId}.json`)
     if (!existsSync(assessmentFile)) {
-      return NextResponse.json([])
+      return NextResponse.json([]) as Response
     }
 
     const allAssessments: SkillAssessmentRecord[] = JSON.parse(
       readFileSync(assessmentFile, 'utf8')
     )
 
-    return NextResponse.json(allAssessments)
+    return NextResponse.json(allAssessments) as Response
   } catch (error) {
     console.error('Error fetching skill assessments:', error)
     return NextResponse.json(
       { error: 'Failed to fetch skill assessments' },
       { status: 500 }
-    )
+    ) as Response
   }
 }
 
@@ -72,14 +72,14 @@ export async function POST(request: Request): Promise<Response> {
       return NextResponse.json(
         { error: 'student_id and date are required' },
         { status: 400 }
-      )
+      ) as Response
     }
 
     if (!assessment.skills || !Array.isArray(assessment.skills)) {
       return NextResponse.json(
         { error: 'skills array is required' },
         { status: 400 }
-      )
+      ) as Response
     }
 
     // 各スキルのバリデーション
@@ -88,13 +88,13 @@ export async function POST(request: Request): Promise<Response> {
         return NextResponse.json(
           { error: `Skill ${skill.skill} score must be between 1 and 5` },
           { status: 400 }
-        )
+        ) as Response
       }
       if (skill.confidence < 1 || skill.confidence > 5) {
         return NextResponse.json(
           { error: `Skill ${skill.skill} confidence must be between 1 and 5` },
           { status: 400 }
-        )
+        ) as Response
       }
     }
 
@@ -136,13 +136,13 @@ export async function POST(request: Request): Promise<Response> {
       // Airtableへの保存に失敗しても、ローカルファイルには保存されているので続行
     }
 
-    return NextResponse.json({ success: true, assessment })
+    return NextResponse.json({ success: true, assessment }) as Response
   } catch (error) {
     console.error('Error saving skill assessment:', error)
     return NextResponse.json(
       { error: 'Failed to save skill assessment' },
       { status: 500 }
-    )
+    ) as Response
   }
 }
 

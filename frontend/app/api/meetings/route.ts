@@ -68,13 +68,13 @@ export async function GET(request: Request): Promise<Response> {
       new Date(b.date).getTime() - new Date(a.date).getTime()
     )
 
-    return NextResponse.json(filtered)
+    return NextResponse.json(filtered) as Response
   } catch (error) {
     console.error('Error fetching meetings:', error)
     return NextResponse.json(
       { error: 'Failed to fetch meetings' },
       { status: 500 }
-    )
+    ) as Response
   }
 }
 
@@ -91,7 +91,7 @@ export async function POST(request: Request): Promise<Response> {
       return NextResponse.json(
         { error: 'date, title, content, and created_by are required' },
         { status: 400 }
-      )
+      ) as Response
     }
 
     // meeting_idを生成
@@ -134,13 +134,13 @@ export async function POST(request: Request): Promise<Response> {
       // Airtableへの保存に失敗しても、ローカルファイルには保存されているので続行
     }
 
-    return NextResponse.json({ success: true, meeting })
+    return NextResponse.json({ success: true, meeting }) as Response
   } catch (error) {
     console.error('Error saving meeting:', error)
     return NextResponse.json(
       { error: 'Failed to save meeting' },
       { status: 500 }
-    )
+    ) as Response
   }
 }
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Card from '@/components/Card'
 
 interface CheckInForm {
@@ -21,7 +20,6 @@ interface CheckInForm {
 }
 
 export default function CheckInPage() {
-  const router = useRouter()
   const [students, setStudents] = useState<any[]>([])
   const [selectedStudentId, setSelectedStudentId] = useState<string>('')
   const [form, setForm] = useState<CheckInForm>({
@@ -91,7 +89,7 @@ export default function CheckInPage() {
 
       if (response.ok) {
         alert('チェックインが保存されました！')
-        router.push(`/student/${form.student_id}`)
+        window.location.href = `/student/${form.student_id}`
       } else {
         alert('エラーが発生しました')
       }

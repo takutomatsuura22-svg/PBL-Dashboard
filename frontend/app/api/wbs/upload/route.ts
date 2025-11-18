@@ -175,7 +175,7 @@ function parseCSV(csvContent: string): any[] {
   let dataStartIndex = 1
   
   // ヘッダー行を探す（「ステータス」や「カテゴリ」などの列名を含む行）
-  for (let i = 0; i < Math.min(5, lines.length) as Response; i++) {
+  for (let i = 0; i < Math.min(5, lines.length); i++) {
     const line = parseCSVLine(lines[i])
     const firstCol = line[0]?.toLowerCase() || ''
     if (firstCol.includes('ステータス') || firstCol.includes('status') || 

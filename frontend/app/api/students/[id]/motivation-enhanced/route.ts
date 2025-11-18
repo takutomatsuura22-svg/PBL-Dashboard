@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { join } from 'path'
 import { readFileSync, existsSync, readdirSync } from 'fs'
 import { getStudents, getTasks } from '@/lib/datastore'
+import { calculateMotivationEnhanced, detectMotivationChange } from '@/lib/ai/motivation_enhanced'
 
 interface CheckInData {
   date: string
@@ -34,7 +35,7 @@ export async function GET(
       return NextResponse.json(
         { error: 'Student not found' },
         { status: 404 }
-      )
+      ) as Response
     }
 
     // タスクデータを取得
@@ -110,13 +111,13 @@ export async function GET(
       checkin_count: recentCheckIns.length,
       change_detection: changeDetection,
       recommendation: generateRecommendation(result, changeDetection)
-    })
+    }) as Response
   } catch (error) {
     console.error('Error calculating enhanced motivation:', error)
     return NextResponse.json(
       { error: 'Failed to calculate enhanced motivation' },
       { status: 500 }
-    )
+    ) as Response
   }
 }
 
